@@ -12,7 +12,9 @@ import (
 func dataSourceBalance() *schema.Resource {
 	return &schema.Resource{
 		Description: "Provides the balance of the account of the provided public key",
-		Read:        dataSourceBalanceRead,
+
+		Read: dataSourceBalanceRead,
+
 		Schema: map[string]*schema.Schema{
 			"public_key": {
 				Type:        schema.TypeString,

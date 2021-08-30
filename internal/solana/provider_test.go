@@ -13,7 +13,7 @@ var (
 	}
 )
 
-func TestProvider(t *testing.T) {
+func TestProviderValidation(t *testing.T) {
 	p := testAccProviders["solana"]
 	err := p.InternalValidate()
 	assert.NoError(t, err)

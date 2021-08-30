@@ -11,7 +11,9 @@ import (
 func dataSourceSupply() *schema.Resource {
 	return &schema.Resource{
 		Description: "Provides information about the current supply on the network",
-		Read:        dataSourceSupplyRead,
+
+		Read: dataSourceSupplyRead,
+
 		Schema: map[string]*schema.Schema{
 			"total": {
 				Type:        schema.TypeInt,

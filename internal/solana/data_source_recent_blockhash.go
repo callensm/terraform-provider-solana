@@ -11,7 +11,9 @@ import (
 func dataSourceRecentBlockhash() *schema.Resource {
 	return &schema.Resource{
 		Description: "Retrieves a recent block hash from the ledger and the associated cost in lamports per signature on a new transaction for that block",
-		Read:        dataSourceRecentBlockhashRead,
+
+		Read: dataSourceRecentBlockhashRead,
+
 		Schema: map[string]*schema.Schema{
 			"blockhash": {
 				Type:        schema.TypeString,

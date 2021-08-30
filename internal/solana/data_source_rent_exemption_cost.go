@@ -11,7 +11,9 @@ import (
 func dataSourceRentExemptionCost() *schema.Resource {
 	return &schema.Resource{
 		Description: "Provides the minimum balance required to make an account rent exempt in lamports",
-		Read:        dataSourceRentExemptionCostRead,
+
+		Read: dataSourceRentExemptionCostRead,
+
 		Schema: map[string]*schema.Schema{
 			"data_length": {
 				Type:        schema.TypeInt,

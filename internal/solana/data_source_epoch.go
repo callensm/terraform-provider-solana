@@ -11,7 +11,9 @@ import (
 func dataSourceEpoch() *schema.Resource {
 	return &schema.Resource{
 		Description: "Provides all of the relevant information about the current epoch",
-		Read:        dataSourceEpochRead,
+
+		Read: dataSourceEpochRead,
+
 		Schema: map[string]*schema.Schema{
 			"absolute_slot": {
 				Type:        schema.TypeInt,

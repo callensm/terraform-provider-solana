@@ -11,7 +11,9 @@ import (
 func dataSourceAccount() *schema.Resource {
 	return &schema.Resource{
 		Description: "Provides all information associated with the account of the provided public key",
-		Read:        dataSourceAccountRead,
+
+		Read: dataSourceAccountRead,
+
 		Schema: map[string]*schema.Schema{
 			"public_key": {
 				Type:        schema.TypeString,

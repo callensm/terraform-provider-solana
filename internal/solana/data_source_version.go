@@ -10,7 +10,9 @@ import (
 func dataSourceVersion() *schema.Resource {
 	return &schema.Resource{
 		Description: "Provides the current Solana software version running on the network node",
-		Read:        dataSourceVersionRead,
+
+		Read: dataSourceVersionRead,
+
 		Schema: map[string]*schema.Schema{
 			"solana_core": {
 				Type:        schema.TypeString,
