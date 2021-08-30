@@ -8,9 +8,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func dataSourceAccountInfo() *schema.Resource {
+func dataSourceAccount() *schema.Resource {
 	return &schema.Resource{
-		Read: dataSourceAccountInfoRead,
+		Read: dataSourceAccountRead,
 
 		Schema: map[string]*schema.Schema{
 			"public_key": {
@@ -42,7 +42,7 @@ func dataSourceAccountInfo() *schema.Resource {
 	}
 }
 
-func dataSourceAccountInfoRead(d *schema.ResourceData, meta interface{}) error {
+func dataSourceAccountRead(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*providerConfig).rpcClient
 
 	pub := d.Get("public_key").(string)
@@ -56,7 +56,7 @@ func dataSourceAccountInfoRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	d.SetId(fmt.Sprintf("account_info:%s", pub))
+	d.SetId(fmt.Sprintf("account:%s", pub))
 	d.Set("lamports", uint64(res.Value.Lamports))
 	d.Set("owner", res.Value.Owner.String())
 	d.Set("executable", res.Value.Executable)

@@ -24,8 +24,9 @@ func New() *schema.Provider {
 		ResourcesMap: map[string]*schema.Resource{},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"solana_account_info": dataSourceAccountInfo(),
-			"solana_balance":      dataSourceBalance(),
+			"solana_account": dataSourceAccount(),
+			"solana_balance": dataSourceBalance(),
+			"solana_epoch":   dataSourceEpoch(),
 		},
 	}
 }

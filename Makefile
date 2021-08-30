@@ -1,7 +1,7 @@
 clean:
 	rm -rf vendor/
 
-test: vendor
+test:
 	TF_ACC=1 go test -v ./solana/...
 
 vendor: clean
