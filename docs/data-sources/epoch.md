@@ -3,12 +3,12 @@
 page_title: "solana_epoch Data Source - terraform-provider-solana"
 subcategory: ""
 description: |-
-  
+  Provides all of the relevant information about the current epoch
 ---
 
 # solana_epoch (Data Source)
 
-
+Provides all of the relevant information about the current epoch
 
 
 

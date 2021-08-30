@@ -3,12 +3,12 @@
 page_title: "solana_account Data Source - terraform-provider-solana"
 subcategory: ""
 description: |-
-  
+  Provides all information associated with the account of the provided public key
 ---
 
 # solana_account (Data Source)
 
-
+Provides all information associated with the account of the provided public key
 
 
 

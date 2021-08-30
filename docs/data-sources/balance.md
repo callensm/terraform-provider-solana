@@ -3,12 +3,12 @@
 page_title: "solana_balance Data Source - terraform-provider-solana"
 subcategory: ""
 description: |-
-  
+  Provides the balance of the account of the provided public key
 ---
 
 # solana_balance (Data Source)
 
-
+Provides the balance of the account of the provided public key
 
 
 

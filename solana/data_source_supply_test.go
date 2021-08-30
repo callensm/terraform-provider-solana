@@ -9,38 +9,38 @@ import (
 )
 
 const (
-	testEpochDataConfig = `
+	testSupplyConfig = `
 		provider "solana" {
 			endpoint = "https://api.testnet.solana.com"
 		}
 
-		data "solana_epoch" "test" {}
+		data "solana_supply" "test" {}
 	`
 )
 
-func TestAccEpochDataSource(t *testing.T) {
+func TestAccSupplySource(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testEpochDataConfig,
+				Config: testSupplyConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testEpochDataSucceeds("data.solana_epoch.test"),
+					testSupplySucceeds("data.solana_supply.test"),
 				),
 			},
 		},
 	})
 }
 
-func testEpochDataSucceeds(name string) resource.TestCheckFunc {
+func testSupplySucceeds(name string) resource.TestCheckFunc {
 	return func(state *terraform.State) error {
 		val, ok := state.RootModule().Resources[name]
 		if !ok {
-			return fmt.Errorf("Epoch Failure: %s not found", name)
+			return fmt.Errorf("Supply Failure: %s not found", name)
 		}
 
 		if val.Primary.ID == "" {
-			return fmt.Errorf("Epoch Failure: ID was not set")
+			return fmt.Errorf("Supply Failure: ID was not set")
 		}
 
 		return nil

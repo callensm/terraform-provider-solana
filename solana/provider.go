@@ -24,9 +24,13 @@ func New() *schema.Provider {
 		ResourcesMap: map[string]*schema.Resource{},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"solana_account": dataSourceAccount(),
-			"solana_balance": dataSourceBalance(),
-			"solana_epoch":   dataSourceEpoch(),
+			"solana_account":             dataSourceAccount(),
+			"solana_balance":             dataSourceBalance(),
+			"solana_epoch":               dataSourceEpoch(),
+			"solana_recent_blockhash":    dataSourceRecentBlockhash(),
+			"solana_rent_exemption_cost": dataSourceRentExemptionCost(),
+			"solana_supply":              dataSourceSupply(),
+			"solana_version":             dataSourceVersion(),
 		},
 	}
 }

@@ -9,38 +9,40 @@ import (
 )
 
 const (
-	testEpochDataConfig = `
+	testRentExemptionCostConfig = `
 		provider "solana" {
 			endpoint = "https://api.testnet.solana.com"
 		}
 
-		data "solana_epoch" "test" {}
+		data "solana_rent_exemption_cost" "test" {
+            data_length = 50
+        }
 	`
 )
 
-func TestAccEpochDataSource(t *testing.T) {
+func TestAccRentExemptionCostSource(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testEpochDataConfig,
+				Config: testRentExemptionCostConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testEpochDataSucceeds("data.solana_epoch.test"),
+					testRentExemptionCostSucceeds("data.solana_rent_exemption_cost.test"),
 				),
 			},
 		},
 	})
 }
 
-func testEpochDataSucceeds(name string) resource.TestCheckFunc {
+func testRentExemptionCostSucceeds(name string) resource.TestCheckFunc {
 	return func(state *terraform.State) error {
 		val, ok := state.RootModule().Resources[name]
 		if !ok {
-			return fmt.Errorf("Epoch Failure: %s not found", name)
+			return fmt.Errorf("Rent Exemption Cost Failure: %s not found", name)
 		}
 
 		if val.Primary.ID == "" {
-			return fmt.Errorf("Epoch Failure: ID was not set")
+			return fmt.Errorf("Rent Exemption Cost Failure: ID was not set")
 		}
 
 		return nil
