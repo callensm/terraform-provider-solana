@@ -10,19 +10,19 @@ import (
 
 func dataSourceRentExemptionCost() *schema.Resource {
 	return &schema.Resource{
-		Description: "Provides the minimum balance required to make an account rent exempt in lamports",
+		Description: "[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getminimumbalanceforrentexemption) Provides the minimum balance required to make an account rent exempt in lamports.",
 
 		Read: dataSourceRentExemptionCostRead,
 
 		Schema: map[string]*schema.Schema{
 			"data_length": {
 				Type:        schema.TypeInt,
-				Description: "The length of the data stored in the account",
+				Description: "The length of the data stored in the account.",
 				Required:    true,
 			},
 			"lamports": {
 				Type:        schema.TypeInt,
-				Description: "The calculated minimum cost of rent exemption for the account size",
+				Description: "The calculated minimum cost of rent exemption for the account size.",
 				Computed:    true,
 			},
 		},

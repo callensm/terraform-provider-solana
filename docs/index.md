@@ -29,5 +29,5 @@ provider "solana" {
 
 ### Optional
 
-- **cluster** (String) Name of the Solana cluster to target
-- **endpoint** (String) The RPC endpoint for the target Solana cluster
+- **cluster** (String) Name of the Solana cluster to target. This field is mutually exclusive with `endpoint`.
+- **endpoint** (String) The RPC endpoint for the target Solana cluster. This field is mutually exclusive with `cluster`.

@@ -3,12 +3,12 @@
 page_title: "solana_rent_exemption_cost Data Source - terraform-provider-solana"
 subcategory: ""
 description: |-
-  Provides the minimum balance required to make an account rent exempt in lamports
+  (JSON RPC) https://docs.solana.com/developing/clients/jsonrpc-api#getminimumbalanceforrentexemption Provides the minimum balance required to make an account rent exempt in lamports.
 ---
 
 # solana_rent_exemption_cost (Data Source)
 
-Provides the minimum balance required to make an account rent exempt in lamports
+[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getminimumbalanceforrentexemption) Provides the minimum balance required to make an account rent exempt in lamports.
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ data "solana_rent_exemption_cost" "ex" {
 
 ### Required
 
-- **data_length** (Number) The length of the data stored in the account
+- **data_length** (Number) The length of the data stored in the account.
 
 ### Optional
 
@@ -31,6 +31,6 @@ data "solana_rent_exemption_cost" "ex" {
 
 ### Read-Only
 
-- **lamports** (Number) The calculated minimum cost of rent exemption for the account size
+- **lamports** (Number) The calculated minimum cost of rent exemption for the account size.
 
 

@@ -6,6 +6,7 @@ import (
 
 	"github.com/gagliardetto/solana-go/rpc"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 func init() {
@@ -28,14 +29,14 @@ func New() *schema.Provider {
 			"cluster": {
 				Type:          schema.TypeString,
 				Optional:      true,
-				Description:   "Name of the Solana cluster to target",
+				Description:   "Name of the Solana cluster to target. This field is mutually exclusive with `endpoint`.",
 				ConflictsWith: []string{"endpoint"},
-				ValidateFunc:  validateProviderClusterName,
+				ValidateFunc:  validation.StringInSlice(clusterNameOptions, false),
 			},
 			"endpoint": {
 				Type:          schema.TypeString,
 				Optional:      true,
-				Description:   "The RPC endpoint for the target Solana cluster",
+				Description:   "The RPC endpoint for the target Solana cluster. This field is mutually exclusive with `cluster`.",
 				ConflictsWith: []string{"cluster"},
 			},
 		},
@@ -44,6 +45,7 @@ func New() *schema.Provider {
 
 		DataSourcesMap: map[string]*schema.Resource{
 			"solana_account":             dataSourceAccount(),
+			"solana_address_signatures":  dataSourceAddressSignatures(),
 			"solana_balance":             dataSourceBalance(),
 			"solana_epoch":               dataSourceEpoch(),
 			"solana_recent_blockhash":    dataSourceRecentBlockhash(),

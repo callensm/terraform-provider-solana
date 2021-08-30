@@ -3,12 +3,12 @@
 page_title: "solana_recent_blockhash Data Source - terraform-provider-solana"
 subcategory: ""
 description: |-
-  Retrieves a recent block hash from the ledger and the associated cost in lamports per signature on a new transaction for that block
+  (JSON RPC) https://docs.solana.com/developing/clients/jsonrpc-api#getrecentblockhash Retrieves a recent block hash from the ledger and the associated cost in lamports per signature on a new transaction for that block.
 ---
 
 # solana_recent_blockhash (Data Source)
 
-Retrieves a recent block hash from the ledger and the associated cost in lamports per signature on a new transaction for that block
+[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getrecentblockhash) Retrieves a recent block hash from the ledger and the associated cost in lamports per signature on a new transaction for that block.
 
 ## Example Usage
 
@@ -25,7 +25,7 @@ data "solana_recent_blockhash" "hash" {}
 
 ### Read-Only
 
-- **blockhash** (String) Base-58 encoded hash string of the block
-- **lamports_per_signature** (Number) The lamports cost per signature of the block
+- **blockhash** (String) Base-58 encoded hash string of the block.
+- **lamports_per_signature** (Number) The lamports cost per signature of the block.
 
 

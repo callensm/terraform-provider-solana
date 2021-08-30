@@ -1,6 +1,7 @@
 package solana
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -8,11 +9,15 @@ import (
 )
 
 const (
-	// FIXME:
 	testTransactionConfig = `
 		provider "solana" {
 			endpoint = "https://api.testnet.solana.com"
 		}
+
+        data "solana_transaction" "tx" {
+            signature = "4qoJbgVoPRLKe7bRTD9aMkh9q9spkcyZyZxQyeihGM26uLd7AeyahYhMWjnGwm2BDCsi7a9LuLwQr8iGV2gwATzK"
+            encoding  = "json"
+        }
 	`
 )
 
@@ -23,7 +28,7 @@ func TestAccTransactionDataSource(t *testing.T) {
 			{
 				Config: testTransactionConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testSupplySucceeds("data.solana_transaction.tx"),
+					testTransactionSucceeds("data.solana_transaction.tx"),
 				),
 			},
 		},
@@ -32,7 +37,15 @@ func TestAccTransactionDataSource(t *testing.T) {
 
 func testTransactionSucceeds(name string) resource.TestCheckFunc {
 	return func(state *terraform.State) error {
-		// TODO:
+		val, ok := state.RootModule().Resources[name]
+		if !ok {
+			return fmt.Errorf("Transaction Failure: %s not found", name)
+		}
+
+		if val.Primary.ID == "" {
+			return fmt.Errorf("Transaction Failure: ID was not set")
+		}
+
 		return nil
 	}
 }

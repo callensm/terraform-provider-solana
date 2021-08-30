@@ -6,40 +6,43 @@ import (
 
 	"github.com/gagliardetto/solana-go"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 func dataSourceAccount() *schema.Resource {
 	return &schema.Resource{
-		Description: "Provides all information associated with the account of the provided public key",
+		Description: "[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getaccountinfo) Provides all information associated with the account of the provided public key",
 
 		Read: dataSourceAccountRead,
 
 		Schema: map[string]*schema.Schema{
 			"public_key": {
-				Type:        schema.TypeString,
-				Description: "Base-58 encoded public key of the account to query",
-				Required:    true,
+				Type:         schema.TypeString,
+				Description:  "Base-58 encoded public key of the account to query.",
+				Required:     true,
+				ValidateFunc: validation.StringLenBetween(32, 44),
 			},
 			"lamports": {
 				Type:        schema.TypeInt,
-				Description: "Number of lamports assigned to the account",
+				Description: "Number of lamports assigned to the account.",
 				Computed:    true,
 			},
 			"owner": {
 				Type:        schema.TypeString,
-				Description: "Base-58 encoded public key of the program the account is assigned to",
+				Description: "Base-58 encoded public key of the program the account is assigned to.",
 				Computed:    true,
 			},
 			"executable": {
 				Type:        schema.TypeBool,
-				Description: "Indicates whether the account contains a program",
+				Description: "Indicates whether the account contains a program.",
 				Computed:    true,
 			},
 			"rent_epoch": {
 				Type:        schema.TypeInt,
-				Description: "The epoch at which this account will next owe rent",
+				Description: "The epoch at which this account will next owe rent.",
 				Computed:    true,
 			},
+			// TODO: add data field support
 		},
 	}
 }

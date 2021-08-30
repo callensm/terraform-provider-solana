@@ -10,34 +10,34 @@ import (
 
 func dataSourceEpoch() *schema.Resource {
 	return &schema.Resource{
-		Description: "Provides all of the relevant information about the current epoch",
+		Description: "[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getepochinfo) Provides all of the relevant information about the current epoch.",
 
 		Read: dataSourceEpochRead,
 
 		Schema: map[string]*schema.Schema{
 			"absolute_slot": {
 				Type:        schema.TypeInt,
-				Description: "The current absolute slot in the epoch",
+				Description: "The current absolute slot in the epoch.",
 				Computed:    true,
 			},
 			"block_height": {
 				Type:        schema.TypeInt,
-				Description: "The current block height",
+				Description: "The current block height.",
 				Computed:    true,
 			},
 			"epoch": {
 				Type:        schema.TypeInt,
-				Description: "The current epoch count",
+				Description: "The current epoch count.",
 				Computed:    true,
 			},
 			"slot_index": {
 				Type:        schema.TypeInt,
-				Description: "The current slot relative to the start of the current epoch",
+				Description: "The current slot relative to the start of the current epoch.",
 				Computed:    true,
 			},
 			"slots_in_epoch": {
 				Type:        schema.TypeInt,
-				Description: "The number of slots in this epoch",
+				Description: "The number of slots in this epoch.",
 				Computed:    true,
 			},
 		},

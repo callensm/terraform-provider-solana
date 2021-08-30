@@ -10,24 +10,24 @@ import (
 
 func dataSourceSupply() *schema.Resource {
 	return &schema.Resource{
-		Description: "Provides information about the current supply on the network",
+		Description: "[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getsupply) Provides information about the current supply on the network.",
 
 		Read: dataSourceSupplyRead,
 
 		Schema: map[string]*schema.Schema{
 			"total": {
 				Type:        schema.TypeInt,
-				Description: "Total supply of lamports",
+				Description: "Total supply of lamports.",
 				Computed:    true,
 			},
 			"circulating": {
 				Type:        schema.TypeInt,
-				Description: "Circulating supply in lamports",
+				Description: "Circulating supply in lamports.",
 				Computed:    true,
 			},
 			"non_circulating": {
 				Type:        schema.TypeInt,
-				Description: "Non-circulating supply in lamports",
+				Description: "Non-circulating supply in lamports.",
 				Computed:    true,
 			},
 		},

@@ -10,19 +10,19 @@ import (
 
 func dataSourceRecentBlockhash() *schema.Resource {
 	return &schema.Resource{
-		Description: "Retrieves a recent block hash from the ledger and the associated cost in lamports per signature on a new transaction for that block",
+		Description: "[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getrecentblockhash) Retrieves a recent block hash from the ledger and the associated cost in lamports per signature on a new transaction for that block.",
 
 		Read: dataSourceRecentBlockhashRead,
 
 		Schema: map[string]*schema.Schema{
 			"blockhash": {
 				Type:        schema.TypeString,
-				Description: "Base-58 encoded hash string of the block",
+				Description: "Base-58 encoded hash string of the block.",
 				Computed:    true,
 			},
 			"lamports_per_signature": {
 				Type:        schema.TypeInt,
-				Description: "The lamports cost per signature of the block",
+				Description: "The lamports cost per signature of the block.",
 				Computed:    true,
 			},
 		},

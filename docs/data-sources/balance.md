@@ -3,12 +3,12 @@
 page_title: "solana_balance Data Source - terraform-provider-solana"
 subcategory: ""
 description: |-
-  Provides the balance of the account of the provided public key
+  (JSON RPC) https://docs.solana.com/developing/clients/jsonrpc-api#getbalance Provides the balance of the account of the provided public key.
 ---
 
 # solana_balance (Data Source)
 
-Provides the balance of the account of the provided public key
+[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getbalance) Provides the balance of the account of the provided public key.
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ data "solana_balance" "bal" {
 
 ### Required
 
-- **public_key** (String) Base-58 encoded public key of the account to query
+- **public_key** (String) Base-58 encoded public key of the account to query.
 
 ### Optional
 
@@ -31,6 +31,6 @@ data "solana_balance" "bal" {
 
 ### Read-Only
 
-- **balance** (Number) The balance of the queried account
+- **balance** (Number) The balance of the queried account.
 
 

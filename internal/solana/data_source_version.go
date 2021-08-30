@@ -9,19 +9,19 @@ import (
 
 func dataSourceVersion() *schema.Resource {
 	return &schema.Resource{
-		Description: "Provides the current Solana software version running on the network node",
+		Description: "[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getversion) Provides the current Solana software version running on the network node.",
 
 		Read: dataSourceVersionRead,
 
 		Schema: map[string]*schema.Schema{
 			"solana_core": {
 				Type:        schema.TypeString,
-				Description: "Software version of `solana-core` running on the node",
+				Description: "Software version of `solana-core` running on the node.",
 				Computed:    true,
 			},
 			"feature_set": {
 				Type:        schema.TypeInt,
-				Description: "A unique identifier of the current software's feature set",
+				Description: "A unique identifier of the current software's feature set.",
 				Computed:    true,
 			},
 		},

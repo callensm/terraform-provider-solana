@@ -3,12 +3,12 @@
 page_title: "solana_supply Data Source - terraform-provider-solana"
 subcategory: ""
 description: |-
-  Provides information about the current supply on the network
+  (JSON RPC) https://docs.solana.com/developing/clients/jsonrpc-api#getsupply Provides information about the current supply on the network.
 ---
 
 # solana_supply (Data Source)
 
-Provides information about the current supply on the network
+[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getsupply) Provides information about the current supply on the network.
 
 ## Example Usage
 
@@ -25,8 +25,8 @@ data "solana_supply" "curr" {}
 
 ### Read-Only
 
-- **circulating** (Number) Circulating supply in lamports
-- **non_circulating** (Number) Non-circulating supply in lamports
-- **total** (Number) Total supply of lamports
+- **circulating** (Number) Circulating supply in lamports.
+- **non_circulating** (Number) Non-circulating supply in lamports.
+- **total** (Number) Total supply of lamports.
 
 

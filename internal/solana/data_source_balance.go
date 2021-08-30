@@ -7,23 +7,25 @@ import (
 	"github.com/gagliardetto/solana-go"
 	"github.com/gagliardetto/solana-go/rpc"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 func dataSourceBalance() *schema.Resource {
 	return &schema.Resource{
-		Description: "Provides the balance of the account of the provided public key",
+		Description: "[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#getbalance) Provides the balance of the account of the provided public key.",
 
 		Read: dataSourceBalanceRead,
 
 		Schema: map[string]*schema.Schema{
 			"public_key": {
-				Type:        schema.TypeString,
-				Description: "Base-58 encoded public key of the account to query",
-				Required:    true,
+				Type:         schema.TypeString,
+				Description:  "Base-58 encoded public key of the account to query.",
+				Required:     true,
+				ValidateFunc: validation.StringLenBetween(32, 44),
 			},
 			"balance": {
 				Type:        schema.TypeInt, // FIXME:
-				Description: "The balance of the queried account",
+				Description: "The balance of the queried account.",
 				Computed:    true,
 			},
 		},

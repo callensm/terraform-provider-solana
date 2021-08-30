@@ -3,12 +3,12 @@
 page_title: "solana_transaction Data Source - terraform-provider-solana"
 subcategory: ""
 description: |-
-  Provides the details for a confirmed transaction
+  (JSON RPC) https://docs.solana.com/developing/clients/jsonrpc-api#gettransaction Provides the details for a confirmed transaction.
 ---
 
 # solana_transaction (Data Source)
 
-Provides the details for a confirmed transaction
+[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#gettransaction) Provides the details for a confirmed transaction.
 
 ## Example Usage
 
@@ -30,16 +30,16 @@ data "solana_transaction" "tx" {
 
 ### Required
 
-- **signature** (String) Transaction signature as a base-58 encoded string
+- **signature** (String) Transaction signature as a base-58 encoded string.
 
 ### Optional
 
-- **encoding** (String) Desired encoding for returned transaction data (`json`, `jsonParsed`, `base58`, `base64`)
+- **encoding** (String) Desired encoding for returned transaction data (`json`, `jsonParsed`, `base58`, `base64`). Defaults to `base64`.
 - **id** (String) The ID of this resource.
 
 ### Read-Only
 
-- **block_time** (Number) The estimated production time as a Unix timestamp of when the transaction was processed
-- **slot** (Number) The slot in which the transaction was processed
+- **block_time** (Number) The estimated production time as a Unix timestamp of when the transaction was processed.
+- **slot** (Number) The slot in which the transaction was processed.
 
 
