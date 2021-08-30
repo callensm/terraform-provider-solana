@@ -30,7 +30,7 @@ func New() *schema.Provider {
 				Optional:      true,
 				Description:   "Name of the Solana cluster to target",
 				ConflictsWith: []string{"endpoint"},
-				ValidateFunc:  validateClusterProviderClusterName,
+				ValidateFunc:  validateProviderClusterName,
 			},
 			"endpoint": {
 				Type:          schema.TypeString,
@@ -49,6 +49,7 @@ func New() *schema.Provider {
 			"solana_recent_blockhash":    dataSourceRecentBlockhash(),
 			"solana_rent_exemption_cost": dataSourceRentExemptionCost(),
 			"solana_supply":              dataSourceSupply(),
+			"solana_transaction":         dataSourceTransaction(),
 			"solana_version":             dataSourceVersion(),
 		},
 	}
@@ -72,7 +73,7 @@ func initializeProvider(d *schema.ResourceData) (interface{}, error) {
 	}, nil
 }
 
-func validateClusterProviderClusterName(val interface{}, k string) (warnings []string, errs []error) {
+func validateProviderClusterName(val interface{}, k string) (warnings []string, errs []error) {
 	for _, name := range clusterNameOptions {
 		if name == val.(string) {
 			return
