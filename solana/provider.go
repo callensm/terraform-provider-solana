@@ -11,6 +11,7 @@ type providerConfig struct {
 
 func New() *schema.Provider {
 	return &schema.Provider{
+		ConfigureFunc: initializeProvider,
 		Schema: map[string]*schema.Schema{
 			"endpoint": {
 				Type:        schema.TypeString,
@@ -18,11 +19,7 @@ func New() *schema.Provider {
 				Description: "The RPC endpoint for the target Solana cluster",
 			},
 		},
-
-		ConfigureFunc: initializeProvider,
-
 		ResourcesMap: map[string]*schema.Resource{},
-
 		DataSourcesMap: map[string]*schema.Resource{
 			"solana_account":             dataSourceAccount(),
 			"solana_balance":             dataSourceBalance(),
