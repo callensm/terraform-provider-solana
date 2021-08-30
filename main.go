@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/callensm/terraform-provider-solana/solana"
+	"github.com/callensm/terraform-provider-solana/internal/solana"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
 )
 

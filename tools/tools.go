@@ -1,6 +1,6 @@
 // +build tools
 
-package main
+package tools
 
 import (
 	_ "github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs"

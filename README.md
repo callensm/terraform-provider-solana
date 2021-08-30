@@ -4,4 +4,4 @@
 
 ## License
 
-[MIT](./LICENSE)
+[MPL v2.0](./LICENSE)
