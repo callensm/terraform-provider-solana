@@ -63,6 +63,9 @@ func dataSourceTransactionRead(d *schema.ResourceData, meta interface{}) error {
 	res, err := client.GetTransaction(context.Background(), sig, &rpc.GetTransactionOpts{
 		Encoding: solana.EncodingType(d.Get("encoding").(string)),
 	})
+	if err != nil {
+		return err
+	}
 
 	d.SetId(fmt.Sprintf("transaction:%s_%d", sig.String(), res.Slot))
 	d.Set("slot", uint64(res.Slot))
