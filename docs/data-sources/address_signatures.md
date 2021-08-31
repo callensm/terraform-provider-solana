@@ -52,7 +52,7 @@ Optional:
 
 - **after** (String) Search until this transaction signature or the response limit is reached.
 - **before** (String) Start searching backwards from this transaction signature. If not provided the search starts from the top of the highest max confirmed block.
-- **limit** (Number) Maximum transaction signatures to return (between 1 and 1,000).
+- **limit** (Number) Maximum transaction signatures to return (between 1 and 1,000). Defaults to `500`.
 
 
 <a id="nestedatt--results"></a>

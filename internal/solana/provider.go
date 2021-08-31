@@ -61,6 +61,7 @@ func New() *schema.Provider {
 			"solana_node_identity":       dataSourceNodeIdentity(),
 			"solana_recent_blockhash":    dataSourceRecentBlockhash(),
 			"solana_rent_exemption_cost": dataSourceRentExemptionCost(),
+			"solana_signature_status":    dataSourceSignatureStatus(),
 			"solana_supply":              dataSourceSupply(),
 			"solana_token_supply":        dataSourceTokenSupply(),
 			"solana_transaction":         dataSourceTransaction(),

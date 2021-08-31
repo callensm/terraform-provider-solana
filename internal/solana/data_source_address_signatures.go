@@ -32,9 +32,9 @@ func dataSourceAddressSignatures() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"limit": {
 							Type:         schema.TypeInt,
-							Description:  "Maximum transaction signatures to return (between 1 and 1,000).",
+							Description:  "Maximum transaction signatures to return (between 1 and 1,000). Defaults to `500`.",
 							Optional:     true,
-							Default:      1000,
+							Default:      500,
 							ValidateFunc: validation.IntBetween(1, 1000),
 						},
 						"before": {
