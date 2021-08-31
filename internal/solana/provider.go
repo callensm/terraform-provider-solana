@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/gagliardetto/solana-go"
 	"github.com/gagliardetto/solana-go/rpc"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
@@ -14,13 +15,20 @@ func init() {
 }
 
 var (
-	clusterNameOptions = []string{"localnet", "testnet", "devnet", "mainnet-beta", "serumnet"}
+	clusterNameOptions  = []string{"localnet", "testnet", "devnet", "mainnet-beta", "serumnet"}
+	dataEncodingOptions = []string{
+		string(solana.EncodingBase58),
+		string(solana.EncodingBase64),
+		string(solana.EncodingJSON),
+		string(solana.EncodingJSONParsed),
+	}
 )
 
 type providerConfig struct {
 	rpcClient *rpc.Client
 }
 
+// New compiles and returns a new instance of the Solana provider
 func New() *schema.Provider {
 	return &schema.Provider{
 		ConfigureFunc: initializeProvider,
@@ -53,6 +61,7 @@ func New() *schema.Provider {
 			"solana_recent_blockhash":    dataSourceRecentBlockhash(),
 			"solana_rent_exemption_cost": dataSourceRentExemptionCost(),
 			"solana_supply":              dataSourceSupply(),
+			"solana_token_supply":        dataSourceTokenSupply(),
 			"solana_transaction":         dataSourceTransaction(),
 			"solana_version":             dataSourceVersion(),
 		},

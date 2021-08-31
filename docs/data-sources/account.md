@@ -13,8 +13,15 @@ description: |-
 ## Example Usage
 
 ```terraform
+# Basic Usage
 data "solana_account" "acc" {
   public_key = "11111111111111111111111111111111"
+}
+
+# Specify Account Data Encoding
+data "solana_account" "acc" {
+  public_key = "11111111111111111111111111111111"
+  encoding   = "jsonParsed"
 }
 ```
 
@@ -27,10 +34,12 @@ data "solana_account" "acc" {
 
 ### Optional
 
+- **encoding** (String) Desired encoding for returned transaction data (`json`, `jsonParsed`, `base58`, `base64`). Defaults to `base64`.
 - **id** (String) The ID of this resource.
 
 ### Read-Only
 
+- **data** (String) Data associated with the account, either as encoded binary data or JSON depending on the value of `encoding`.
 - **executable** (Boolean) Indicates whether the account contains a program.
 - **lamports** (Number) Number of lamports assigned to the account.
 - **owner** (String) Base-58 encoded public key of the program the account is assigned to.

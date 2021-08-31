@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/gagliardetto/solana-go"
+	"github.com/gagliardetto/solana-go/rpc"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
@@ -21,6 +22,18 @@ func dataSourceAccount() *schema.Resource {
 				Description:  "Base-58 encoded public key of the account to query.",
 				Required:     true,
 				ValidateFunc: validation.StringLenBetween(32, 44),
+			},
+			"encoding": {
+				Type:         schema.TypeString,
+				Description:  "Desired encoding for returned transaction data (`json`, `jsonParsed`, `base58`, `base64`). Defaults to `base64`.",
+				Optional:     true,
+				Default:      solana.EncodingBase64,
+				ValidateFunc: validation.StringInSlice(dataEncodingOptions, false),
+			},
+			"data": {
+				Type:        schema.TypeString,
+				Description: "Data associated with the account, either as encoded binary data or JSON depending on the value of `encoding`.",
+				Computed:    true,
 			},
 			"lamports": {
 				Type:        schema.TypeInt,
@@ -42,7 +55,6 @@ func dataSourceAccount() *schema.Resource {
 				Description: "The epoch at which this account will next owe rent.",
 				Computed:    true,
 			},
-			// TODO: add data field support
 		},
 	}
 }
@@ -56,7 +68,10 @@ func dataSourceAccountRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	res, err := client.GetAccountInfo(context.Background(), address)
+	encoding := solana.EncodingType(d.Get("encoding").(string))
+	res, err := client.GetAccountInfoWithOpts(context.Background(), address, &rpc.GetAccountInfoOpts{
+		Encoding: encoding,
+	})
 	if err != nil {
 		return err
 	}
@@ -66,5 +81,12 @@ func dataSourceAccountRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("owner", res.Value.Owner.String())
 	d.Set("executable", res.Value.Executable)
 	d.Set("rent_epoch", uint64(res.Value.RentEpoch))
+
+	if encoding == solana.EncodingJSONParsed {
+		d.Set("data", string(res.Value.Data.GetRawJSON()))
+	} else {
+		d.Set("data", res.Value.Data.GetBytes().String())
+	}
+
 	return nil
 }

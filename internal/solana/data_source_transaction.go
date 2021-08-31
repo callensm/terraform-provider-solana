@@ -10,15 +10,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
-var (
-	transactionDataEncodingOptions = []string{
-		string(solana.EncodingBase58),
-		string(solana.EncodingBase64),
-		string(solana.EncodingJSON),
-		string(solana.EncodingJSONParsed),
-	}
-)
-
 func dataSourceTransaction() *schema.Resource {
 	return &schema.Resource{
 		Description: "[(JSON RPC)](https://docs.solana.com/developing/clients/jsonrpc-api#gettransaction) Provides the details for a confirmed transaction.",
@@ -36,7 +27,7 @@ func dataSourceTransaction() *schema.Resource {
 				Description:  "Desired encoding for returned transaction data (`json`, `jsonParsed`, `base58`, `base64`). Defaults to `base64`.",
 				Optional:     true,
 				Default:      solana.EncodingBase64,
-				ValidateFunc: validation.StringInSlice(transactionDataEncodingOptions, false),
+				ValidateFunc: validation.StringInSlice(dataEncodingOptions, false),
 			},
 			"slot": {
 				Type:        schema.TypeInt,
@@ -74,7 +65,7 @@ func dataSourceTransactionRead(d *schema.ResourceData, meta interface{}) error {
 }
 
 func validateTransactionDataEncoding(val interface{}, k string) (warnings []string, errs []error) {
-	for _, encoding := range transactionDataEncodingOptions {
+	for _, encoding := range dataEncodingOptions {
 		if string(encoding) == val.(string) {
 			return
 		}
