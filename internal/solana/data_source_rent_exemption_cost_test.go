@@ -20,7 +20,7 @@ const (
 	`
 )
 
-func TestAccRentExemptionCostSource(t *testing.T) {
+func TestAccRentExemptionCostDataSource(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{

@@ -18,7 +18,7 @@ const (
 	`
 )
 
-func TestAccSupplySource(t *testing.T) {
+func TestAccSupplyDataSource(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{

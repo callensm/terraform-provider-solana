@@ -41,7 +41,9 @@ func New() *schema.Provider {
 			},
 		},
 
-		ResourcesMap: map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{
+			"solana_random_keypair": resourceRandomKeypair(),
+		},
 
 		DataSourcesMap: map[string]*schema.Resource{
 			"solana_account":             dataSourceAccount(),
