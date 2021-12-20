@@ -131,7 +131,7 @@ func dataSourceAddressSignaturesRead(d *schema.ResourceData, meta interface{}) e
 		r := map[string]interface{}{
 			"signature":  sig.Signature.String(),
 			"slot":       uint64(sig.Slot),
-			"block_time": int64(sig.BlockTime),
+			"block_time": int64(sig.BlockTime.Time().Unix()),
 		}
 
 		if sig.Memo != nil {

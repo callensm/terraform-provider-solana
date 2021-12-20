@@ -60,17 +60,6 @@ func dataSourceTransactionRead(d *schema.ResourceData, meta interface{}) error {
 
 	d.SetId(fmt.Sprintf("transaction:%s_%d", sig.String(), res.Slot))
 	d.Set("slot", uint64(res.Slot))
-	d.Set("block_time", int64(res.BlockTime))
+	d.Set("block_time", int64(res.BlockTime.Time().Unix()))
 	return nil
-}
-
-func validateTransactionDataEncoding(val interface{}, k string) (warnings []string, errs []error) {
-	for _, encoding := range dataEncodingOptions {
-		if string(encoding) == val.(string) {
-			return
-		}
-	}
-
-	errs = append(errs, fmt.Errorf("transaction data encoding input (%s) is not a valid option", val.(string)))
-	return
 }

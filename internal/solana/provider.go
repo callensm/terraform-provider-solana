@@ -2,7 +2,6 @@ package solana
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/gagliardetto/solana-go"
 	"github.com/gagliardetto/solana-go/rpc"
@@ -50,7 +49,8 @@ func New() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"solana_random_keypair": resourceRandomKeypair(),
+			"solana_associated_token_account": resourceAssociatedTokenAccount(),
+			"solana_random_keypair":           resourceRandomKeypair(),
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
@@ -85,17 +85,6 @@ func initializeProvider(d *schema.ResourceData) (interface{}, error) {
 	}
 
 	return &providerConfig{
-		rpcClient: rpc.NewClient(endpoint),
+		rpcClient: rpc.New(endpoint),
 	}, nil
-}
-
-func validateProviderClusterName(val interface{}, k string) (warnings []string, errs []error) {
-	for _, name := range clusterNameOptions {
-		if name == val.(string) {
-			return
-		}
-	}
-
-	errs = append(errs, fmt.Errorf("you received cluster name (%s) is not a valid option", val.(string)))
-	return
 }

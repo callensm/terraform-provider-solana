@@ -85,7 +85,7 @@ func dataSourceAccountRead(d *schema.ResourceData, meta interface{}) error {
 	if encoding == solana.EncodingJSONParsed {
 		d.Set("data", string(res.Value.Data.GetRawJSON()))
 	} else {
-		d.Set("data", res.Value.Data.GetBytes().String())
+		d.Set("data", string(res.Value.Data.GetBinary()))
 	}
 
 	return nil

@@ -33,14 +33,14 @@ func resourceRandomKeypair() *schema.Resource {
 }
 
 func resourceRandomKeypairCreate(d *schema.ResourceData, meta interface{}) error {
-	pub, priv, err := solana.NewRandomPrivateKey()
+	key, err := solana.NewRandomPrivateKey()
 	if err != nil {
 		return err
 	}
 
-	d.SetId(fmt.Sprintf("random_keypair:%x", sha1.Sum([]byte(pub.String()))))
-	d.Set("public_key", pub.String())
-	d.Set("private_key", priv.String())
+	d.SetId(fmt.Sprintf("random_keypair:%x", sha1.Sum([]byte(key.PublicKey().String()))))
+	d.Set("public_key", key.PublicKey().String())
+	d.Set("private_key", key.String())
 	return nil
 }
 
