@@ -3,6 +3,7 @@ package solana
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/gagliardetto/solana-go"
 	associatedtokenaccount "github.com/gagliardetto/solana-go/programs/associated-token-account"
@@ -18,6 +19,10 @@ func resourceAssociatedTokenAccount() *schema.Resource {
 		Create: resourceAssociatedTokenAccountCreate,
 		Read:   resourceAssociatedTokenAccountRead,
 		Delete: resourceAssociatedTokenAccountDelete,
+
+		Importer: &schema.ResourceImporter{
+			StateContext: resourceAssociatedTokenAccountImporter,
+		},
 
 		Schema: map[string]*schema.Schema{
 			"owner": {
@@ -182,4 +187,44 @@ func resourceAssociatedTokenAccountDelete(d *schema.ResourceData, meta interface
 	}
 
 	return nil
+}
+
+func resourceAssociatedTokenAccountImporter(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+	client := meta.(*providerConfig).rpcClient
+	idParts := strings.Split(d.Id(), "/")
+
+	owner, err := solana.PublicKeyFromBase58(idParts[0])
+	if err != nil {
+		return nil, err
+	}
+
+	tokenMint, err := solana.PublicKeyFromBase58(idParts[1])
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := client.GetTokenAccountsByOwner(
+		ctx,
+		owner,
+		&rpc.GetTokenAccountsConfig{
+			Mint:      &tokenMint,
+			ProgramId: &associatedtokenaccount.ProgramID,
+		},
+		&rpc.GetTokenAccountsOpts{
+			Commitment: rpc.CommitmentConfirmed,
+		},
+	)
+	if err != nil {
+		return nil, err
+	} else if len(res.Value) == 0 {
+		return nil, fmt.Errorf("the associated token account was not found in the confirmed accounts for owner")
+	}
+
+	d.SetId(fmt.Sprintf("associated_token_account:%s", res.Value[0].Pubkey.String()))
+	d.Set("owner", owner.String())
+	d.Set("payer", owner.String())
+	d.Set("public_key", res.Value[0].Pubkey.String())
+	d.Set("token_mint", tokenMint.String())
+
+	return []*schema.ResourceData{d}, nil
 }
