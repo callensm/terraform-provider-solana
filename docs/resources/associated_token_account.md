@@ -44,4 +44,10 @@ resource "solana_associated_token_account" "acc" {
 
 - **public_key** (String) The base-58 encoded string for the new token account's public key.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import solana_associated_token_account.account <owner-pubkey>/<mint-pubkey>
+```
