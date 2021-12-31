@@ -15,7 +15,7 @@ const (
 		}
 
         data "solana_transaction" "tx" {
-            signature = "4qoJbgVoPRLKe7bRTD9aMkh9q9spkcyZyZxQyeihGM26uLd7AeyahYhMWjnGwm2BDCsi7a9LuLwQr8iGV2gwATzK"
+            signature = "2YcVNxEGwqEsx9Y277h7bjpwZ1KgY6F3GG8bAq84BFgVr7JwrNJknunLoAEXL7EGr88jhevFg6MqThUa3GsfgsjB"
             encoding  = "json"
         }
 	`

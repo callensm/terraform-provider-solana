@@ -50,7 +50,7 @@ func New() *schema.Provider {
 
 		ResourcesMap: map[string]*schema.Resource{
 			"solana_associated_token_account": resourceAssociatedTokenAccount(),
-			"solana_random_keypair":           resourceRandomKeypair(),
+			"solana_keypair":                  resourceKeypair(),
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{

@@ -11,11 +11,11 @@ import (
 const (
 	testTokenRegistryEntryConfig = `
 		provider "solana" {
-			endpoint = "https://api.testnet.solana.com"
+			cluster = "mainnet-beta"
 		}
 
 		data "solana_token_registry_entry" "entry" {
-            mint_address = "3bjpzTTK49eP8m1bYxw6HYAFGtzyWjvEyGYcFS4gbRAx"
+            mint_address = "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt"
         }
 	`
 )
@@ -27,7 +27,7 @@ func TestAccTokenRegistryEntryDataSource(t *testing.T) {
 			{
 				Config: testTokenRegistryEntryConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testVersionSucceeds("data.solana_token_registry_entry.entry"),
+					testTokenRegistryEntrySucceeds("data.solana_token_registry_entry.entry"),
 				),
 			},
 		},
