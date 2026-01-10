@@ -86,7 +86,7 @@ func resourceAssociatedTokenAccountCreate(d *schema.ResourceData, meta interface
 		return err
 	}
 
-	_, err = client.SendTransactionWithOpts(context.Background(), tx, false, rpc.CommitmentConfirmed)
+	_, err = client.SendTransactionWithOpts(context.Background(), tx, rpc.TransactionOpts{})
 	if err != nil {
 		return err
 	}
@@ -181,7 +181,7 @@ func resourceAssociatedTokenAccountDelete(d *schema.ResourceData, meta interface
 		return err
 	}
 
-	_, err = client.SendTransactionWithOpts(context.Background(), tx, false, rpc.CommitmentConfirmed)
+	_, err = client.SendTransactionWithOpts(context.Background(), tx, rpc.TransactionOpts{})
 	if err != nil {
 		return err
 	}

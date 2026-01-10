@@ -44,7 +44,7 @@ func dataSourceEpoch() *schema.Resource {
 	}
 }
 
-func dataSourceEpochRead(d *schema.ResourceData, meta interface{}) error {
+func dataSourceEpochRead(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	res, err := client.GetEpochInfo(context.Background(), rpc.CommitmentRecent)
@@ -54,7 +54,7 @@ func dataSourceEpochRead(d *schema.ResourceData, meta interface{}) error {
 
 	d.SetId(fmt.Sprintf("epoch:%d", uint64(res.Epoch)))
 	d.Set("absolute_slot", uint64(res.AbsoluteSlot))
-	d.Set("block_height", uint64(res.TransactionCount))
+	d.Set("block_height", res.TransactionCount)
 	d.Set("epoch", uint64(res.Epoch))
 	d.Set("slot_index", uint64(res.SlotIndex))
 	d.Set("slots_in_epoch", uint64(res.SlotsInEpoch))

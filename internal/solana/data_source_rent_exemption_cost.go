@@ -29,11 +29,11 @@ func dataSourceRentExemptionCost() *schema.Resource {
 	}
 }
 
-func dataSourceRentExemptionCostRead(d *schema.ResourceData, meta interface{}) error {
+func dataSourceRentExemptionCostRead(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	dataLength := d.Get("data_length").(int)
-	res, err := client.GetMinimumBalanceForRentExemption(context.Background(), uint64(dataLength), rpc.CommitmentRecent)
+	res, err := client.GetMinimumBalanceForRentExemption(context.Background(), uint64(dataLength), rpc.CommitmentProcessed)
 	if err != nil {
 		return err
 	}

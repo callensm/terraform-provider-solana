@@ -18,7 +18,6 @@ var (
 	dataEncodingOptions = []string{
 		string(solana.EncodingBase58),
 		string(solana.EncodingBase64),
-		string(solana.EncodingJSON),
 		string(solana.EncodingJSONParsed),
 	}
 )
@@ -54,24 +53,22 @@ func New() *schema.Provider {
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"solana_account":              dataSourceAccount(),
-			"solana_address_signatures":   dataSourceAddressSignatures(),
-			"solana_balance":              dataSourceBalance(),
-			"solana_epoch":                dataSourceEpoch(),
-			"solana_node_identity":        dataSourceNodeIdentity(),
-			"solana_recent_blockhash":     dataSourceRecentBlockhash(),
-			"solana_rent_exemption_cost":  dataSourceRentExemptionCost(),
-			"solana_signature_status":     dataSourceSignatureStatus(),
-			"solana_supply":               dataSourceSupply(),
-			"solana_token_registry_entry": dataSourceTokenRegistryEntry(),
-			"solana_token_supply":         dataSourceTokenSupply(),
-			"solana_transaction":          dataSourceTransaction(),
-			"solana_version":              dataSourceVersion(),
+			"solana_account":             dataSourceAccount(),
+			"solana_address_signatures":  dataSourceAddressSignatures(),
+			"solana_balance":             dataSourceBalance(),
+			"solana_epoch":               dataSourceEpoch(),
+			"solana_node_identity":       dataSourceNodeIdentity(),
+			"solana_rent_exemption_cost": dataSourceRentExemptionCost(),
+			"solana_signature_status":    dataSourceSignatureStatus(),
+			"solana_supply":              dataSourceSupply(),
+			"solana_token_supply":        dataSourceTokenSupply(),
+			"solana_transaction":         dataSourceTransaction(),
+			"solana_version":             dataSourceVersion(),
 		},
 	}
 }
 
-func initializeProvider(d *schema.ResourceData) (interface{}, error) {
+func initializeProvider(d *schema.ResourceData) (any, error) {
 	var endpoint string
 
 	if clusterArg, ok := d.GetOk("cluster"); ok {

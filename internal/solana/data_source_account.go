@@ -59,7 +59,7 @@ func dataSourceAccount() *schema.Resource {
 	}
 }
 
-func dataSourceAccountRead(d *schema.ResourceData, meta interface{}) error {
+func dataSourceAccountRead(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	pub := d.Get("public_key").(string)
@@ -80,7 +80,7 @@ func dataSourceAccountRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("lamports", uint64(res.Value.Lamports))
 	d.Set("owner", res.Value.Owner.String())
 	d.Set("executable", res.Value.Executable)
-	d.Set("rent_epoch", uint64(res.Value.RentEpoch))
+	d.Set("rent_epoch", res.Value.RentEpoch.Uint64())
 
 	if encoding == solana.EncodingJSONParsed {
 		d.Set("data", string(res.Value.Data.GetRawJSON()))

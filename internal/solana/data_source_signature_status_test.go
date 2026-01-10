@@ -15,7 +15,7 @@ const (
 		}
 
 		data "solana_signature_status" "test" {
-            signature = "5Pe5B4239HixXdHfzjj7ffqHVN7rGnmEfbGzLZhyycinfwb3LciRuaxPUiyRJFQuKo4h8yg65es8L7B2dMZcT3xC"
+            signature = "MowmH2w4va9Q4v5Bo3JummYQQXdVsqThgeSzx3tK7edNrJXsAy2JwbzDLno3s8NKWVUvsWu3b7wuaUPLLuDdyTV"
             search_transaction_history = true
         }
 	`

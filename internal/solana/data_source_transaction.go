@@ -24,7 +24,7 @@ func dataSourceTransaction() *schema.Resource {
 			},
 			"encoding": {
 				Type:         schema.TypeString,
-				Description:  "Desired encoding for returned transaction data (`json`, `jsonParsed`, `base58`, `base64`). Defaults to `base64`.",
+				Description:  "Desired encoding for returned transaction data (`jsonParsed`, `base58`, `base64`). Defaults to `base64`.",
 				Optional:     true,
 				Default:      solana.EncodingBase64,
 				ValidateFunc: validation.StringInSlice(dataEncodingOptions, false),
@@ -43,7 +43,7 @@ func dataSourceTransaction() *schema.Resource {
 	}
 }
 
-func dataSourceTransactionRead(d *schema.ResourceData, meta interface{}) error {
+func dataSourceTransactionRead(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	sig, err := solana.SignatureFromBase58(d.Get("signature").(string))

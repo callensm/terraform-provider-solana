@@ -82,7 +82,7 @@ func resourceKeypair() *schema.Resource {
 	}
 }
 
-func resourceKeypairCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceKeypairCreate(d *schema.ResourceData, meta any) error {
 	var key solana.PrivateKey
 	var err error
 
@@ -92,7 +92,7 @@ func resourceKeypairCreate(d *schema.ResourceData, meta interface{}) error {
 			return err
 		}
 	} else {
-		opts := d.Get("grind").(*schema.Set).List()[0].(map[string]interface{})
+		opts := d.Get("grind").(*schema.Set).List()[0].(map[string]any)
 		threads := opts["threads"].(int)
 
 		keyChan := make(chan solana.PrivateKey, 1)
@@ -101,12 +101,12 @@ func resourceKeypairCreate(d *schema.ResourceData, meta interface{}) error {
 		doneChan := make(chan bool, threads)
 		defer close(doneChan)
 
-		for i := 0; i < threads; i++ {
+		for range threads {
 			go grindKeypairWithOptions(opts["prefix"].(string), opts["suffix"].(string), keyChan, doneChan)
 		}
 
 		key = <-keyChan
-		for i := 0; i < threads; i++ {
+		for range threads {
 			doneChan <- true
 		}
 	}
@@ -122,7 +122,7 @@ func resourceKeypairCreate(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceKeypairRead(d *schema.ResourceData, meta interface{}) error {
+func resourceKeypairRead(d *schema.ResourceData, meta any) error {
 	key, err := solana.PrivateKeyFromSolanaKeygenFile(d.Get("output_path").(string))
 	if err != nil {
 		return err
@@ -134,7 +134,7 @@ func resourceKeypairRead(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceKeypairDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceKeypairDelete(d *schema.ResourceData, meta any) error {
 	err := os.Remove(d.Get("output_path").(string))
 	if err != nil {
 		return err
