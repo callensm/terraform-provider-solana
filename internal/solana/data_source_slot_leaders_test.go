@@ -23,7 +23,7 @@ const (
 
 var expectedLeaders = [3]string{"dzkLmvHKsScz186ZAvnXMyHCeRznFrKyX7pzbozbz4T", "4eDS5fB3keUA5qxwphZaCDGUqfrmZSry1E2t9bjzUPHS", "4eDS5fB3keUA5qxwphZaCDGUqfrmZSry1E2t9bjzUPHS"}
 
-func TestAccSlotLeaders(t *testing.T) {
+func TestAccSlotLeadersDataSource(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
