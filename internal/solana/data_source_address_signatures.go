@@ -83,12 +83,12 @@ func dataSourceAddressSignatures() *schema.Resource {
 	}
 }
 
-func dataSourceAddressSignaturesRead(d *schema.ResourceData, meta interface{}) error {
+func dataSourceAddressSignaturesRead(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	rpcOpts := &rpc.GetSignaturesForAddressOpts{}
 	if val, ok := d.GetOk("search_options"); ok {
-		searchOptions := val.([]interface{})[0].(map[string]interface{})
+		searchOptions := val.([]any)[0].(map[string]any)
 
 		if limit, ok := searchOptions["limit"]; ok {
 			tmp := limit.(int)
@@ -126,9 +126,9 @@ func dataSourceAddressSignaturesRead(d *schema.ResourceData, meta interface{}) e
 
 	d.SetId(fmt.Sprintf("address_signatures:%s", account.String()))
 
-	var results []map[string]interface{}
+	var results []map[string]any
 	for _, sig := range res {
-		r := map[string]interface{}{
+		r := map[string]any{
 			"signature":  sig.Signature.String(),
 			"slot":       uint64(sig.Slot),
 			"block_time": int64(sig.BlockTime.Time().Unix()),

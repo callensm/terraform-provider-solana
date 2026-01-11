@@ -23,7 +23,7 @@ func dataSourceNodeIdentity() *schema.Resource {
 	}
 }
 
-func dataSourceNodeIdentityRead(d *schema.ResourceData, meta interface{}) error {
+func dataSourceNodeIdentityRead(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	res, err := client.GetIdentity(context.Background())

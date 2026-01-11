@@ -32,7 +32,7 @@ func dataSourceBalance() *schema.Resource {
 	}
 }
 
-func dataSourceBalanceRead(d *schema.ResourceData, meta interface{}) error {
+func dataSourceBalanceRead(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	pub := d.Get("public_key").(string)
