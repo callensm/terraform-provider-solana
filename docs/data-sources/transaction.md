@@ -34,7 +34,7 @@ data "solana_transaction" "tx" {
 
 ### Optional
 
-- **encoding** (String) Desired encoding for returned transaction data (`json`, `jsonParsed`, `base58`, `base64`). Defaults to `base64`.
+- **encoding** (String) Desired encoding for returned transaction data (`jsonParsed`, `base58`, `base64`). Defaults to `base64`.
 - **id** (String) The ID of this resource.
 
 ### Read-Only
