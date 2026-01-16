@@ -58,6 +58,7 @@ func New() *schema.Provider {
 			"solana_balance":             dataSourceBalance(),
 			"solana_epoch":               dataSourceEpoch(),
 			"solana_genesis_hash":        dataSourceGenesisHash(),
+			"solana_health":              dataSourceHealth(),
 			"solana_node_identity":       dataSourceNodeIdentity(),
 			"solana_rent_exemption_cost": dataSourceRentExemptionCost(),
 			"solana_signature_status":    dataSourceSignatureStatus(),
