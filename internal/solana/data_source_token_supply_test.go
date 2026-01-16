@@ -27,7 +27,7 @@ func TestAccTokenSupplyDataSource(t *testing.T) {
 			{
 				Config: testTokenSupplyConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testSupplySucceeds("data.solana_token_supply.test"),
+					testTokenSupplySucceeds("data.solana_token_supply.test"),
 				),
 			},
 		},
