@@ -6,7 +6,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
-	"time"
+	"sync"
 
 	"github.com/gagliardetto/solana-go"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -31,6 +31,12 @@ func resourceKeypair() *schema.Resource {
 				MaxItems:     1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"case_sensitive": {
+							Type:        schema.TypeBool,
+							Description: "Case sensitivity for the prefix and suffix parameters.",
+							Optional:    true,
+							Default:     false,
+						},
 						"prefix": {
 							Type:        schema.TypeString,
 							Description: "The desired prefix of the public key.",
@@ -95,20 +101,26 @@ func resourceKeypairCreate(d *schema.ResourceData, meta any) error {
 		opts := d.Get("grind").(*schema.Set).List()[0].(map[string]any)
 		threads := opts["threads"].(int)
 
+		var wg sync.WaitGroup
+
 		keyChan := make(chan solana.PrivateKey, 1)
 		defer close(keyChan)
 
-		doneChan := make(chan bool, threads)
-		defer close(doneChan)
+		stopChan := make(chan bool, threads)
+		defer close(stopChan)
 
 		for range threads {
-			go grindKeypairWithOptions(opts["prefix"].(string), opts["suffix"].(string), keyChan, doneChan)
+			wg.Go(func() {
+				grindKeypairWithOptions(opts["prefix"].(string), opts["suffix"].(string), opts["case_sensitive"].(bool), keyChan, stopChan)
+			})
 		}
 
 		key = <-keyChan
 		for range threads {
-			doneChan <- true
+			stopChan <- true
 		}
+
+		wg.Wait()
 	}
 
 	err = os.WriteFile(d.Get("output_path").(string), []byte(bytesAsJSONArray(key)), os.ModePerm)
@@ -144,34 +156,42 @@ func resourceKeypairDelete(d *schema.ResourceData, meta any) error {
 	return nil
 }
 
-func grindKeypairWithOptions(prefix, suffix string, keyChan chan<- solana.PrivateKey, doneChan <-chan bool) {
+func grindKeypairWithOptions(prefix, suffix string, caseSensitive bool, keyChan chan<- solana.PrivateKey, stopChan <-chan bool) {
 	for {
-		time.Sleep(time.Millisecond * 150)
-
 		select {
-		case <-doneChan:
+		case <-stopChan:
 			return
 		default:
-			break
+			keypair, err := solana.NewRandomPrivateKey()
+			if err != nil {
+				continue
+			}
+
+			pubkey := keypair.PublicKey().String()
+
+			if caseSensitive {
+				if prefix != "" && !strings.HasPrefix(pubkey, prefix) {
+					continue
+				}
+
+				if suffix != "" && !strings.HasSuffix(pubkey, suffix) {
+					continue
+				}
+			} else {
+				lowerPubkey := strings.ToLower(pubkey)
+
+				if prefix != "" && !strings.HasPrefix(lowerPubkey, strings.ToLower(prefix)) {
+					continue
+				}
+
+				if suffix != "" && !strings.HasPrefix(lowerPubkey, strings.ToLower(suffix)) {
+					continue
+				}
+			}
+
+			keyChan <- keypair
+			return
 		}
-
-		key, err := solana.NewRandomPrivateKey()
-		if err != nil {
-			continue
-		}
-
-		pubKey := key.PublicKey().String()
-
-		if prefix != "" && !strings.HasPrefix(pubKey, prefix) {
-			continue
-		}
-
-		if suffix != "" && !strings.HasSuffix(pubKey, suffix) {
-			continue
-		}
-
-		keyChan <- key
-		break
 	}
 }
 

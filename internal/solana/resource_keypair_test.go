@@ -2,6 +2,7 @@ package solana
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -42,20 +43,20 @@ func TestAccKeypairResource(t *testing.T) {
 			{
 				Config: testRandomKeypairConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testKeypairSucceeds("solana_keypair.test"),
+					testKeypairSucceeds("solana_keypair.test", false),
 				),
 			},
 			{
 				Config: testGrindedKeypairConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testKeypairSucceeds("solana_keypair.test"),
+					testKeypairSucceeds("solana_keypair.test", true),
 				),
 			},
 		},
 	})
 }
 
-func testKeypairSucceeds(name string) resource.TestCheckFunc {
+func testKeypairSucceeds(name string, prefixed bool) resource.TestCheckFunc {
 	return func(state *terraform.State) error {
 		val, ok := state.RootModule().Resources[name]
 		if !ok {
@@ -68,6 +69,10 @@ func testKeypairSucceeds(name string) resource.TestCheckFunc {
 
 		if val.Primary.Attributes["public_key"] == "" || val.Primary.Attributes["private_key"] == "" {
 			return fmt.Errorf("Keypair Failure: `public_key` and/or `private_key` were not set")
+		}
+
+		if prefixed && !strings.HasPrefix(strings.ToLower(val.Primary.Attributes["public_key"]), "abc") {
+			return fmt.Errorf("Keypair Failure: `public_key` did not have the test configuration prefix")
 		}
 
 		return nil
