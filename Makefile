@@ -1,3 +1,6 @@
+docs:
+	tfplugindocs
+
 clean:
 	rm -rf vendor/
 
@@ -7,4 +10,4 @@ test:
 vendor: clean
 	go mod tidy && go mod vendor
 
-.PHONY: clean test vendor
+.PHONY: docs clean test vendor

@@ -52,6 +52,7 @@ resource "solana_keypair" "key" {
 
 Optional:
 
+- **case_sensitive** (Boolean) Case sensitivity for the prefix and suffix parameters.
 - **prefix** (String) The desired prefix of the public key.
 - **suffix** (String) The desired suffix of the public key.
 - **threads** (Number) The number of threads to grind for the keypair (between 1-15).
