@@ -52,7 +52,7 @@ func resourceAssociatedTokenAccount() *schema.Resource {
 	}
 }
 
-func resourceAssociatedTokenAccountCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceAssociatedTokenAccountCreate(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	owner, err := solana.PublicKeyFromBase58(d.Get("owner").(string))
@@ -116,7 +116,7 @@ func resourceAssociatedTokenAccountCreate(d *schema.ResourceData, meta interface
 	return nil
 }
 
-func resourceAssociatedTokenAccountRead(d *schema.ResourceData, meta interface{}) error {
+func resourceAssociatedTokenAccountRead(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	owner, err := solana.PublicKeyFromBase58(d.Get("owner").(string))
@@ -151,7 +151,7 @@ func resourceAssociatedTokenAccountRead(d *schema.ResourceData, meta interface{}
 	return nil
 }
 
-func resourceAssociatedTokenAccountDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceAssociatedTokenAccountDelete(d *schema.ResourceData, meta any) error {
 	client := meta.(*providerConfig).rpcClient
 
 	tokenAccount, err := solana.PublicKeyFromBase58(d.Get("public_key").(string))
@@ -189,7 +189,7 @@ func resourceAssociatedTokenAccountDelete(d *schema.ResourceData, meta interface
 	return nil
 }
 
-func resourceAssociatedTokenAccountImporter(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+func resourceAssociatedTokenAccountImporter(ctx context.Context, d *schema.ResourceData, meta any) ([]*schema.ResourceData, error) {
 	client := meta.(*providerConfig).rpcClient
 	idParts := strings.Split(d.Id(), "/")
 
